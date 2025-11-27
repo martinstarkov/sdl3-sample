@@ -251,11 +251,9 @@ elseif(EMSCRIPTEN)
   # unintuitively, this is done via a linker argument.
   target_link_libraries(
     ${EXECUTABLE_NAME}
-    PRIVATE
-      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/../assets/Inter-VariableFont.ttf@/\""
-      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/../assets/the_entertainer.ogg@/\""
-      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/../assets/gs_tiger.svg@/\""
-  )
+    PRIVATE "--preload-file \"assets/Inter-VariableFont.ttf\""
+            "--preload-file \"assets/the_entertainer.ogg\""
+            "--preload-file \"assets/logo.png\"")
 else()
   if(ANDROID)
     if(NOT MOBILE_ASSETS_DIR)
