@@ -243,18 +243,19 @@ if(APPLE)
     set_property(SOURCE ${FILE} PROPERTY MACOSX_PACKAGE_LOCATION
                                          "Resources/${relpath}")
   endmacro()
-  add_resource("${CMAKE_CURRENT_LIST_DIR}/src/Inter-VariableFont.ttf")
-  add_resource("${CMAKE_CURRENT_LIST_DIR}/src/the_entertainer.ogg")
-  add_resource("${CMAKE_CURRENT_LIST_DIR}/src/gs_tiger.svg")
+  add_resource("${CMAKE_CURRENT_LIST_DIR}/src/../assets/Inter-VariableFont.ttf")
+  add_resource("${CMAKE_CURRENT_LIST_DIR}/src/../assets/the_entertainer.ogg")
+  add_resource("${CMAKE_CURRENT_LIST_DIR}/src/../assets/gs_tiger.svg")
 elseif(EMSCRIPTEN)
   # on the web, we have to put the files inside of the webassembly somewhat
   # unintuitively, this is done via a linker argument.
   target_link_libraries(
     ${EXECUTABLE_NAME}
     PRIVATE
-      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/Inter-VariableFont.ttf@/\""
-      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/the_entertainer.ogg@/\""
-      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/gs_tiger.svg@/\"")
+      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/../assets/Inter-VariableFont.ttf@/\""
+      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/../assets/the_entertainer.ogg@/\""
+      "--preload-file \"${CMAKE_CURRENT_LIST_DIR}/src/../assets/gs_tiger.svg@/\""
+  )
 else()
   if(ANDROID)
     if(NOT MOBILE_ASSETS_DIR)
@@ -275,16 +276,17 @@ else()
     else()
       # for platforms that do not have a good packaging format, all we can do is
       # copy the assets to the process working directory.
-      set(outname "${CMAKE_BINARY_DIR}/$<CONFIGURATION>/${filename}")
+      set(outname "${CMAKE_BINARY_DIR}/$<CONFIGURATION>/assets/${filename}")
     endif()
+    # Replace with mklink
     add_custom_command(
       POST_BUILD TARGET "${EXECUTABLE_NAME}"
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
-              "${CMAKE_CURRENT_LIST_DIR}/src/${filename}" "${outname}")
+              "${CMAKE_CURRENT_LIST_DIR}/assets/${filename}" "${outname}")
   endmacro()
-  copy_helper("../assets/Inter-VariableFont.ttf")
-  copy_helper("../assets/the_entertainer.ogg")
-  copy_helper("../assets/logo.png")
+  copy_helper("Inter-VariableFont.ttf")
+  copy_helper("the_entertainer.ogg")
+  copy_helper("logo.png")
 endif()
 
 # set some extra configs for each platform
