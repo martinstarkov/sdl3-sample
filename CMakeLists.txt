@@ -282,9 +282,9 @@ else()
       COMMAND ${CMAKE_COMMAND} -E copy_if_different
               "${CMAKE_CURRENT_LIST_DIR}/src/${filename}" "${outname}")
   endmacro()
-  copy_helper("Inter-VariableFont.ttf")
-  copy_helper("the_entertainer.ogg")
-  copy_helper("gs_tiger.svg")
+  copy_helper("../assets/Inter-VariableFont.ttf")
+  copy_helper("../assets/the_entertainer.ogg")
+  copy_helper("../assets/logo.png")
 endif()
 
 # set some extra configs for each platform
